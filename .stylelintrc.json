@@ -1,0 +1,7 @@
+{
+  "extends": ["stylelint-config-standard", "stylelint-config-concentric-order"],
+  "plugins": ["stylelint-order"],
+  "rules": {
+    "color-hex-case": "upper"
+  }
+}

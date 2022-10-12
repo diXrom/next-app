@@ -1,66 +1,56 @@
 import type { NextPage } from 'next';
-import Image from 'next/image';
-import styles from '../styles/Home.module.css';
+import { Fragment, useState } from 'react';
+import axios from 'axios';
+import { Htag, Button, P, Tag, Rating } from '../components';
+import { withLayout } from '../layout/Layout';
+import { GetStaticProps } from 'next';
+import { MenuItem } from '../interfaces/menu.interface';
 
-const Home: NextPage = (): JSX.Element => {
-  const a = 1;
+interface HomeProps extends Record<string, unknown> {
+  menu: MenuItem[];
+  firstCategory: number;
+}
+
+export const getStaticProps: GetStaticProps<HomeProps> = async () => {
+  const firstCategory = 0;
+  const { data: menu } = await axios.post<MenuItem[]>(
+    process.env.NEXT_PUBLIC_DOMAIN + '/api/top-page/find',
+    { firstCategory }
+  );
+  return { props: { menu, firstCategory } };
+};
+
+const Home: NextPage<HomeProps> = ({ menu } ) => {
+  const [rating, setRating] = useState<number>(4);
+
   return (
-    <div className={styles.container}>
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href='https://nextjs.org'>Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.tsx</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href='https://nextjs.org/docs' className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href='https://nextjs.org/learn' className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href='https://github.com/vercel/next.js/tree/canary/examples'
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href='https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app'
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href='https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Powered by{a}
-          <span className={styles.logo}>
-            <Image src='/vercel.svg' alt='Vercel Logo' width={72} height={16} />
-          </span>
-        </a>
-      </footer>
-    </div>
+    <Fragment>
+      <Htag tag='h1'>Заголовок</Htag>
+      <Button appearance='primary' arrow='right'>
+        Кнопка
+      </Button>
+      <Button appearance='ghost' arrow='down'>
+        Кнопка
+      </Button>
+      <P size='l'>Большой</P>
+      <P>Средний</P>
+      <P size='s'>Маленький</P>
+      <Tag size='s'>Ghost</Tag>
+      <Tag size='m' color='red'>
+        Red
+      </Tag>
+      <Tag size='s' color='green'>
+        Green
+      </Tag>
+      <Tag color='primary'>Green</Tag>
+      <Rating rating={rating} isEditable setRating={setRating} />
+      <ul>
+        {menu.map((m) => (
+          <li key={m._id.secondCategory}>{m._id.secondCategory}</li>
+        ))}
+      </ul>
+    </Fragment>
   );
 };
 
-export default Home;
+export default withLayout(Home);

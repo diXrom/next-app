@@ -20,7 +20,7 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   return { props: { menu, firstCategory } };
 };
 
-const Home: NextPage<HomeProps> = ({ menu } ) => {
+const Home: NextPage<HomeProps> = () => {
   const [rating, setRating] = useState<number>(4);
 
   return (
@@ -44,11 +44,6 @@ const Home: NextPage<HomeProps> = ({ menu } ) => {
       </Tag>
       <Tag color='primary'>Green</Tag>
       <Rating rating={rating} isEditable setRating={setRating} />
-      <ul>
-        {menu.map((m) => (
-          <li key={m._id.secondCategory}>{m._id.secondCategory}</li>
-        ))}
-      </ul>
     </Fragment>
   );
 };

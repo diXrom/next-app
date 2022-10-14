@@ -1,18 +1,18 @@
 .p {
-  margin: 0;
+	margin: 0;
 }
 
 .s {
-  line-height: 24px;
-  font-size: 14px;
+	font-size: 14px;
+	line-height: 24px;
 }
 
 .m {
-  line-height: 24px;
-  font-size: 16px;
+	font-size: 16px;
+	line-height: 24px;
 }
 
 .l {
-  line-height: 29px;
-  font-size: 18px;
+	font-size: 18px;
+	line-height: 29px;
 }

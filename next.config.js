@@ -2,6 +2,9 @@ module.exports = {
 	images: {
 		domains: ['courses-top.ru']
 	},
+	eslint: {
+    ignoreDuringBuilds: true,
+  },
 	webpack(config, options) {
 		config.module.rules.push({
 			loader: '@svgr/webpack',
